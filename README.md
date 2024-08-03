@@ -63,7 +63,7 @@ We welcome contributions to enhance the functionality of this project. Feel free
 - [Shyam Tripathi](https://github.com/TheShyamTripathi)
 - [Harrsh Singh Tiwari](https://github.com/Harsh14055/)
 - [Richa Kumari Jaishwal](https://github.com/Richajaishwal0)
-- [Binay Kushwaha]
+- [Binay Kushwaha](https://github.com/GOLD3PHOENIXsurili)
 
 
 
