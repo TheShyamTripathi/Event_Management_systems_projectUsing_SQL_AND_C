@@ -62,8 +62,8 @@ We welcome contributions to enhance the functionality of this project. Feel free
 ## Authors
 - [Shyam Tripathi](https://github.com/TheShyamTripathi)
 - [Harrsh Singh Tiwari](https://github.com/Harsh14055/)
-- [Richa Kumari Jaishwal](https://github.com/)
-- [Binay Kushwaha](https://github.com/)
+- [Richa Kumari Jaishwal](https://github.com/Richajaishwal0)
+- [Binay Kushwaha]
 
 
 
