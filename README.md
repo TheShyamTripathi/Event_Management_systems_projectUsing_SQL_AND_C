@@ -1,16 +1,43 @@
-# Event Management System Using C and MySQL Databases
+# Event Management System
 
-## Introduction
-This project is a Student Management System developed using C programming language and MySQL databases. It serves as a capstone project for the 3rd semester of our academic course. The system allows efficient management of student information, including adding, updating, deleting, and viewing student records.
+## Project Overview
+The **Event Management System** is a simple application built as a class project. The system allows users to create and manage events, register participants, and track attendance. The project is implemented using C programming for the back-end logic and MySQL for the database.
 
 ## Features
-- **Add Student**: Add new student records to the database.
-- **Update Student**: Modify existing student records.
-- **Delete Student**: Remove student records from the database.
-- **View Students**: Display all student records.
-- **Search Student**: Find student records based on specific criteria.
+- **User Management**: Add and manage users with different roles (Organizers and Participants).
+- **Event Creation**: Organizers can create and manage events, including event title, date, time, and location.
+- **Event Registration**: Participants can register for events.
+- **Attendance Tracking**: Track participant attendance for events.
 
-## Prerequisites
+## Database Schema
+The system uses a MySQL database with the following tables:
+
+1. **Users**
+   - `UserID` (Primary Key)
+   - `Name`
+   - `Email`
+   - `Role` (Organizer/Participant)
+
+2. **Events**
+   - `EventID` (Primary Key)
+   - `Title`
+   - `Date`
+   - `Time`
+   - `Location`
+
+3. **Registrations**
+   - `RegistrationID` (Primary Key)
+   - `UserID` (Foreign Key)
+   - `EventID` (Foreign Key)
+
+4. **Attendance**
+   - `AttendanceID` (Primary Key)
+   - `UserID` (Foreign Key)
+   - `EventID` (Foreign Key)
+
+## Getting Started
+
+### Prerequisites
 - **C Compiler**: Ensure you have a C compiler (like GCC) installed.
 - **MySQL Server**: Install and configure MySQL server.
 - **MySQL Connector/C**: Required to connect C programs with MySQL databases.
@@ -36,23 +63,51 @@ This project is a Student Management System developed using C programming langua
 ### Project Setup
 5. **Clone the Repository**:
    ```sh
-   git clone <https://github.com/TheShyamTripathi/Student_Management_systems_projectUsing_SQL_AND_C/>
+   git clone <https://github.com/TheShyamTripathi/event_Management_systems_projectUsing_SQL_AND_C/>
 6. **Navigate to Project Directory**:
    ```sh
-   cd student-management-system
+   cd event-management-system
 7. **Compile the program**:
    ```sh
-   gcc -o student-management main.c -lymsqlclient
+   gcc -o event-management main.c -lymsqlclient
 8. **Run the Program**:
    ```sh
-   ./student_management
+   ./event_management
+
+## Sample Commands
+
+Below are some example commands used in the system:
+
+### Add User:
+```perl
+add_user("John Doe", "john@example.com", "Organizer");
+```
+### Create Event:
+```bash
+   create_event("Tech Conference", "2024-09-15", "10:00 AM", "Auditorium");
+```
+### Register for Event:
+```bash
+   register_for_event(2, 5); // UserID = 2, EventID = 5
+```
+### Mark Attendence:
+```bash
+   mark_attendance(2, 5); // UserID = 2, EventID = 5
+```
 
 ## Usage
-1. **Add Student**: Follow the prompts to enter student details.
-2. **Update Student**: Select a student by ID and update the required details.
-3. **Delete Student**: Choose a student by ID to remove from the database.
-4. **View Students**: Display a list of all student records.
-5. **Search Student**: Enter specific criteria to search for student records.
+### Add Users:
+- Organizers and participants can be added to the system.
+
+### Create Events:
+- Organizers can create events by providing details like title, date, time, and location.
+
+### Register for Events:
+- Participants can browse available events and register for them.
+
+### Track Attendance:
+- The system allows attendance marking for participants who attend events.
+
   
 
 
@@ -65,12 +120,17 @@ We welcome contributions to enhance the functionality of this project. Feel free
 - [Richa Kumari Jaishwal](https://github.com/Richajaishwal0)
 - [Binay Kushwaha](https://github.com/GOLD3PHOENIXsurili)
 
+## Future Enhancements
+
+Some potential future improvements for the system:
+
+- Implement a graphical user interface (GUI).
+- Add notifications for event reminders.
+- Implement feedback and reporting features.
 
 
 ## Acknowledgements
 We would like to thank our professors and mentors for their guidance and support throughout this project.
-
-
 
 
 ## Collaboration
