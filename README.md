@@ -53,7 +53,7 @@ The system uses a MySQL database with the following tables:
    sudo mysql_secure_installation
 3. **Create DATABASE**:
    ```sh
-   CREATE DATABASE student_management;
+   CREATE DATABASE Event_management;
 
 ## MySQL Connector/C Setup
 4. **Install MySQL Connector/C**:
@@ -63,7 +63,7 @@ The system uses a MySQL database with the following tables:
 ### Project Setup
 5. **Clone the Repository**:
    ```sh
-   git clone <https://github.com/TheShyamTripathi/event_Management_systems_projectUsing_SQL_AND_C/>
+   git clone <https://github.com/TheShyamTripathi/Event_Management_systems_projectUsing_SQL_AND_C/>
 6. **Navigate to Project Directory**:
    ```sh
    cd event-management-system
