@@ -1,4 +1,4 @@
-# Student Management System Using C and MySQL Databases
+# Event Management System Using C and MySQL Databases
 
 ## Introduction
 This project is a Student Management System developed using C programming language and MySQL databases. It serves as a capstone project for the 3rd semester of our academic course. The system allows efficient management of student information, including adding, updating, deleting, and viewing student records.
