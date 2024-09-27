@@ -251,6 +251,23 @@ void markAttendance(MYSQL *conn) {
     // Free allocated memory
     free(query);
 }
+
+// function to delete user
+// function to delete event
+// function to delete the attendance 
+// function to delete the registrations
+
+
+// function to search user
+// function  to search event
+// function to search event register
+// function to search user attendance
+
+// function to update the user
+// function to udate the event
+// function to update the attendance
+// function to update the registrations
+
 int main() {
     MYSQL *conn = connectDatabase();
     if (conn == NULL) {
