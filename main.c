@@ -401,6 +401,79 @@ void deleteEvent(MYSQL *conn) {
     free(query);
 }
 // function to delete the attendance 
+void deleteAttendance(MYSQL *conn) {
+    char *query;
+    int AttendanceID;
+    bool a = true;
+
+    // Allocate memory for the query
+    query = malloc(256 * sizeof(char));
+    if (query == NULL) {
+        fprintf(stderr, "Memory allocation for query failed\n");
+        return;
+    }
+
+    char confirm;
+    while (a) {
+        printf("Enter the AttendanceID (e.g. 1): ");
+        scanf("%d", &AttendanceID);  // Corrected variable name from userid to AttendanceID
+
+        // Formulate the SELECT query
+        sprintf(query, "SELECT * FROM Attendance WHERE AttendanceID = %d", AttendanceID);
+
+        // Execute the SELECT query
+        if (mysql_query(conn, query)) {
+            fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+            free(query);
+            return;
+        }
+
+        MYSQL_RES *result = mysql_store_result(conn);
+        if (result == NULL) {
+            fprintf(stderr, "Failed to retrieve result: %s\n", mysql_error(conn));
+            free(query);
+            return;
+        }
+
+        // Check if any rows were returned
+        if (mysql_num_rows(result) > 0) {
+            MYSQL_ROW row = mysql_fetch_row(result);
+            printf("User Attendance found:\n");
+            printf("AttendanceID: %s\n", row[0]);  // AttendanceID is the first column            
+            printf("UserID: %s\n", row[1]);         // UserID is the second column
+            printf("EventID: %s\n", row[2]);        // EventID is the third column (fixed index)
+
+            printf("Confirm deletion (Y/N): ");
+        } else {
+            printf("No user attendance found with AttendanceID %d. Please try again.\n", AttendanceID);
+            mysql_free_result(result);
+            continue; // Go back to the start of the loop
+        }
+
+        // Clear the input buffer before reading a character
+        while ((getchar()) != '\n'); // Clear any remaining newline characters
+        scanf("%c", &confirm);
+        
+        if (confirm == 'Y' || confirm == 'y') {
+            sprintf(query, "DELETE FROM Attendance WHERE AttendanceID = %d", AttendanceID);
+            // Execute the DELETE query
+            if (mysql_query(conn, query)) {
+                fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+            } else {
+                printf("Attendance record deleted successfully!\n");
+                a = false; // Exit the loop
+            }
+        } else {
+            printf("Retry!\n");
+        }
+
+        mysql_free_result(result); // Free the result set
+    }
+
+    // Free allocated memory
+    free(query);
+}
+
 // function to delete the registrations
 
 
