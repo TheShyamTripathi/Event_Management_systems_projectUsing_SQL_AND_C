@@ -2,6 +2,7 @@
 #include <stdlib.h>
 #include <string.h>
 #include <mysql.h>
+#include <stdbool.h>
 #include <windows.h>
 
 
@@ -253,6 +254,78 @@ void markAttendance(MYSQL *conn) {
 }
 
 // function to delete user
+void removeUser(MYSQL *conn) {
+    char *query;
+    int userid;
+    bool a = true;
+
+    // Allocate memory for the query
+    query = malloc(256 * sizeof(char));
+    if (query == NULL) {
+        fprintf(stderr, "Memory allocation for query failed\n");
+        return;
+    }
+
+    char confirm;
+    while (a) {
+        printf("Enter the UserID (e.g. 1001): ");
+        scanf("%d", &userid);
+
+        // Formulate the SELECT query
+        sprintf(query, "SELECT * FROM USERS WHERE UserID = %d", userid);
+
+        // Execute the SELECT query
+        if (mysql_query(conn, query)) {
+            fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+            free(query);
+            return;
+        }
+
+        MYSQL_RES *result = mysql_store_result(conn);
+        if (result == NULL) {
+            fprintf(stderr, "Failed to retrieve result: %s\n", mysql_error(conn));
+            free(query);
+            return;
+        }
+
+        // Check if any rows were returned
+        if (mysql_num_rows(result) > 0) {
+            MYSQL_ROW row = mysql_fetch_row(result);
+            printf("User found:\n");
+            printf("UserID: %s\n", row[0]);  //  UserID is the first column
+            printf("Name: %s\n", row[1]);     // Name is the second column
+            printf("Email: %s\n", row[2]);    // Email is the third column
+            printf("Role: %s\n", row[3]);     // Role is the fourth column
+            printf("Confirm deletion (Y/N): ");
+        } else {
+            printf("No user found with UserID %d. Please try again.\n", userid);
+            mysql_free_result(result);
+            continue; // Go back to the start of the loop
+        }
+
+        // Clear the input buffer before reading a character
+        while ((getchar()) != '\n'); // Clear any remaining newline characters
+        scanf("%c", &confirm);
+        
+        if (confirm == 'Y' || confirm == 'y') {
+            sprintf(query, "DELETE FROM USERS WHERE UserID = %d", userid);
+            // Execute the DELETE query
+            if (mysql_query(conn, query)) {
+                fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+            } else {
+                printf("User deleted successfully!\n");
+                a = false; // Exit the loop
+            }
+        } else {
+            printf("Retry!\n");
+        }
+
+        mysql_free_result(result); // Free the result set
+    }
+
+    // Free allocated memory
+    free(query);
+}
 // function to delete event
 // function to delete the attendance 
 // function to delete the registrations
