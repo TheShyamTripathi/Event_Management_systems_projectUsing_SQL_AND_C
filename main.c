@@ -173,6 +173,45 @@ void insertEvents(MYSQL *conn) {
     free(Location);
 }
 // Function to insert Registrations of Event
+//Registrations
+
+//RegistrationID (Primary Key)
+//UserID (Foreign Key)
+//EventID (Foreign Key)
+void insertRegistrations(MYSQL *conn) {
+    char *query;
+    int eventid, userid;
+
+    // Allocate memory for the query
+    query = malloc(256 * sizeof(char));
+    if (query == NULL) {
+        fprintf(stderr, "Memory allocation for query failed\n");
+        return;
+    }
+    
+    // Prompt user for input
+    printf("Note: EventId must be three digits (100 and above)\nUserId must be from 1000 and above\n");
+    
+    printf("Enter the UserID: ");
+    scanf("%d", &userid); // Use scanf to read integers directly
+    
+    printf("Enter the EventID: ");
+    scanf("%d", &eventid); // Use scanf to read integers directly
+
+    // Formulate the query
+    sprintf(query, "INSERT INTO Registrations (UserID, EventID) VALUES (%d, %d)", userid, eventid);
+
+    // Execute the query
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+    } else {
+        printf("Registration inserted successfully!\n");
+    }
+
+    // Free allocated memory
+    free(query);
+}
+
 // Functon to insert Attendance
 
 
