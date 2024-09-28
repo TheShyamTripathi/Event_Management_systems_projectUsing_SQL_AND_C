@@ -878,6 +878,103 @@ void findRegisterEvent(MYSQL *conn) {
 }
 
 // function to search user attendance
+void findAttendance(MYSQL *conn) {
+    MYSQL_ROW row;
+    MYSQL_RES *res;
+
+    int choice;
+    printf("Press 1 to display all attendance, 2 to search by AttendanceID, 0 to exit: ");
+    scanf("%d", &choice);
+
+    char *query;
+
+    // Allocate memory for the query
+    query = malloc(256 * sizeof(char));
+    if (query == NULL) {
+        fprintf(stderr, "Memory allocation for query failed\n");
+        return;
+    }
+
+    if (choice == 1) {
+        // Query to select all attendance records
+        sprintf(query, "SELECT * FROM Attendance");
+
+        // Execute the query
+        if (mysql_query(conn, query)) {
+            fprintf(stderr, "Query Failed: %s\n", mysql_error(conn));
+            free(query);  // Free the allocated memory before returning
+            return;
+        }
+
+        // Store the result of the query
+        res = mysql_store_result(conn);
+        if (res == NULL) {
+            fprintf(stderr, "No result: %s\n", mysql_error(conn));
+            free(query);  // Free the allocated memory before returning
+            return;
+        }
+
+        // Display the attendance in table format
+        printf("+-----------------+--------------------+-----------+\n");
+        printf("| AttendanceID    | UserID             | EventID   |\n");
+        printf("+-----------------+--------------------+-----------+\n");
+
+        while ((row = mysql_fetch_row(res)) != NULL) {
+            printf("| %-15s | %-18s | %-9s |\n", row[0], row[1], row[2]);
+        }
+
+        printf("+-----------------+--------------------+-----------+\n");
+
+        // Free the result set
+        mysql_free_result(res);
+
+    } else if (choice == 2) {
+        // Search for a specific attendance record by AttendanceID
+        int attendanceID;
+        printf("Enter the AttendanceID to search: ");
+        scanf("%d", &attendanceID);
+
+        // Formulate the query
+        sprintf(query, "SELECT * FROM Attendance WHERE AttendanceID = %d", attendanceID);
+
+        // Execute the query
+        if (mysql_query(conn, query)) {
+            fprintf(stderr, "Query Failed: %s\n", mysql_error(conn));
+            free(query);  // Free the allocated memory before returning
+            return;
+        }
+
+        // Store the result of the query
+        res = mysql_store_result(conn);
+        if (res == NULL) {
+            fprintf(stderr, "No result: %s\n", mysql_error(conn));
+            free(query);  // Free the allocated memory before returning
+            return;
+        }
+
+        // Fetch and display the row
+        row = mysql_fetch_row(res);
+        if (row) {
+            printf("Attendance Record found:\n");
+            printf("AttendanceID: %s\n", row[0]);
+            printf("UserID: %s\n", row[1]);
+            printf("EventID: %s\n", row[2]);
+        } else {
+            printf("Attendance record with AttendanceID %d not found.\n", attendanceID);
+        }
+
+        // Free the result set
+        mysql_free_result(res);
+
+    } else if (choice == 0) {
+        printf("Exiting...\n");
+    } else {
+        printf("Invalid option! Please enter 1, 2, or 0.\n");
+    }
+
+    // Free allocated memory
+    free(query);
+}
 
 // function to update the user
 // function to udate the event
