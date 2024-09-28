@@ -548,8 +548,145 @@ void deleteRegistrations(MYSQL *conn) {
     free(query);
 }
 
-// function to search user
-// function  to search event
+void searchUser(MYSQL *conn) {
+    char *query;
+    char choice;
+    int userid;
+    char *email =malloc(101 * sizeof(char));
+
+    // Allocate memory for the query
+    query = malloc(256 * sizeof(char));
+    if (query == NULL || email == NULL) {
+        fprintf(stderr, "Memory allocation failed\n");
+        return;
+    }
+
+    printf("Search by (U)serID or (E)mail? Enter U or E: ");
+    scanf(" %c", &choice); // Space before %c to ignore any newline character left in input buffer
+
+    if (choice == 'U' || choice == 'u') {
+        // Search by UserID
+        printf("Enter the UserID: ");
+        scanf("%d", &userid);
+
+        // Formulate the query
+        sprintf(query, "SELECT * FROM Users WHERE UserID = %d", userid);
+
+        // Execute the query
+        if (mysql_query(conn, query)) {
+            fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+            free(query);
+            return;
+        }
+
+        MYSQL_RES *result = mysql_store_result(conn);
+        if (result == NULL) {
+            fprintf(stderr, "Failed to retrieve result: %s\n", mysql_error(conn));
+            free(query);
+            return;
+        }
+
+        // Check if any rows were returned
+        if (mysql_num_rows(result) > 0) {
+            MYSQL_ROW row = mysql_fetch_row(result);
+            printf("User found:\n");
+            printf("UserID: %s\n", row[0]);  // UserID
+            printf("Name: %s\n", row[1]);     // Name
+            printf("Email: %s\n", row[2]);    // Email
+            printf("Role: %s\n", row[3]);     // Role (Organizer/Participant)
+        } else {
+            printf("No user found with UserID %d.\n", userid);
+        }
+
+        mysql_free_result(result); // Free the result set
+    } else if (choice == 'E' || choice == 'e') {
+        // Search by Email
+        printf("Enter the Email: ");
+        getchar(); // To consume the newline character left by previous input
+        fgets(email, 101, stdin);
+        email[strcspn(email, "\n")] = 0; // Remove newline character
+
+        // Formulate the query
+        sprintf(query, "SELECT * FROM Users WHERE Email = '%s'", email);
+
+        // Execute the query
+        if (mysql_query(conn, query)) {
+            fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+            free(query);
+            free(email);
+            return;
+        }
+
+        MYSQL_RES *result = mysql_store_result(conn);
+        if (result == NULL) {
+            fprintf(stderr, "Failed to retrieve result: %s\n", mysql_error(conn));
+            free(query);
+            free(email);
+            return;
+        }
+
+        // Check if any rows were returned
+        if (mysql_num_rows(result) > 0) {
+            MYSQL_ROW row = mysql_fetch_row(result);
+            printf("User found:\n");
+            printf("UserID: %s\n", row[0]);  // UserID
+            printf("Name: %s\n", row[1]);     // Name
+            printf("Email: %s\n", row[2]);    // Email
+            printf("Role: %s\n", row[3]);     // Role (Organizer/Participant)
+        } else {
+            printf("No user found with Email '%s'.\n", email);
+        }
+
+        mysql_free_result(result); // Free the result set
+    } else {
+        printf("Invalid choice! Please enter U or E.\n");
+    }
+
+    // Free allocated memory
+    free(query);
+    free(email);
+}
+
+void findEvent(MYSQL *conn) {
+    MYSQL_RES *res;
+    MYSQL_ROW row;
+    
+    int eventID;
+    printf("Enter the EventID to search: ");
+    scanf("%d", &eventID);
+
+    char query[256];
+    sprintf(query, "SELECT * FROM Events WHERE EventID = %d", eventID);
+
+    // Execute the query
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "Query Failed: %s\n", mysql_error(conn));
+        return;
+    }
+
+    // Store the result of the query
+    res = mysql_store_result(conn);
+    if (res == NULL) {
+        fprintf(stderr, "No result: %s\n", mysql_error(conn));
+        return;
+    }
+
+    // Fetch and display the row
+    row = mysql_fetch_row(res);
+    if (row) {
+        printf("EventID: %s\n", row[0]);
+        printf("Title: %s\n", row[1]);
+        printf("Date: %s\n", row[2]);
+        printf("Time: %s\n", row[3]);
+        printf("Location: %s\n", row[4]);
+    } else {
+        printf("Event with EventID %d not found.\n", eventID);
+    }
+
+    // Free result
+    mysql_free_result(res);
+}
+
 // function to search event register
 // function to search user attendance
 
