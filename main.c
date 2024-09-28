@@ -489,7 +489,7 @@ void deleteRegistrations(MYSQL *conn) {
 
     char confirm;
     while (a) {
-        printf("Enter the RegistrationID (e.g. 1): ");
+        printf("Enter the RegistrationID (e.g. 10000): ");
         scanf("%d", &RegistrationID); // Corrected variable name to RegistrationID
 
         // Formulate the SELECT query
@@ -779,6 +779,103 @@ void findEvent(MYSQL *conn) {
 
 
 // function to search event register
+void findRegisterEvent(MYSQL *conn) {
+    MYSQL_ROW row;
+    MYSQL_RES *res;
+
+    int choice;
+    printf("Press 1 to display all registered events, 2 to search by RegistrationID, 0 to exit: ");
+    scanf("%d", &choice);
+
+    char *query;
+
+    // Allocate memory for the query
+    query = malloc(256 * sizeof(char));
+    if (query == NULL) {
+        fprintf(stderr, "Memory allocation for query failed\n");
+        return;
+    }
+
+    if (choice == 1) {
+        // Query to select all registrations
+        sprintf(query, "SELECT * FROM Registrations");
+
+        // Execute the query
+        if (mysql_query(conn, query)) {
+            fprintf(stderr, "Query Failed: %s\n", mysql_error(conn));
+            free(query);  // Free the allocated memory before returning
+            return;
+        }
+
+        // Store the result of the query
+        res = mysql_store_result(conn);
+        if (res == NULL) {
+            fprintf(stderr, "No result: %s\n", mysql_error(conn));
+            free(query);  // Free the allocated memory before returning
+            return;
+        }
+
+        // Display the registrations in table format
+        printf("+-----------------+--------------------+-----------+\n");
+        printf("| RegistrationID   | UserID             | EventID   |\n");
+        printf("+-----------------+--------------------+-----------+\n");
+
+        while ((row = mysql_fetch_row(res)) != NULL) {
+            printf("| %-15s | %-18s | %-9s |\n", row[0], row[1], row[2]);
+        }
+
+        printf("+-----------------+--------------------+-----------+\n");
+
+        // Free the result set
+        mysql_free_result(res);
+
+    } else if (choice == 2) {
+        // Search for a specific registration by RegistrationID
+        int registrationID;
+        printf("Enter the RegistrationID to search: ");
+        scanf("%d", &registrationID);
+
+        // Formulate the query
+        sprintf(query, "SELECT * FROM Registrations WHERE RegistrationID = %d", registrationID);
+
+        // Execute the query
+        if (mysql_query(conn, query)) {
+            fprintf(stderr, "Query Failed: %s\n", mysql_error(conn));
+            free(query);  // Free the allocated memory before returning
+            return;
+        }
+
+        // Store the result of the query
+        res = mysql_store_result(conn);
+        if (res == NULL) {
+            fprintf(stderr, "No result: %s\n", mysql_error(conn));
+            free(query);  // Free the allocated memory before returning
+            return;
+        }
+
+        // Fetch and display the row
+        row = mysql_fetch_row(res);
+        if (row) {
+            printf("Registered Event found:\n");
+            printf("RegistrationID: %s\n", row[0]);
+            printf("UserID: %s\n", row[1]);
+            printf("EventID: %s\n", row[2]);
+        } else {
+            printf("Registered Event with RegistrationID %d not found.\n", registrationID);
+        }
+
+        // Free the result set
+        mysql_free_result(res);
+
+    } else if (choice == 0) {
+        printf("Exiting...\n");
+    } else {
+        printf("Invalid option! Please enter 1, 2, or 0.\n");
+    }
+
+    // Free allocated memory
+    free(query);
+}
 
 // function to search user attendance
 
