@@ -977,9 +977,284 @@ void findAttendance(MYSQL *conn) {
 }
 
 // function to update the user
-// function to udate the event
-// function to update the attendance
-// function to update the registrations
+//function to check if the event exists
+int checkEventExists(MYSQL *conn, int event_id) {
+    char query[256];
+    snprintf(query, sizeof(query), "SELECT COUNT(*) FROM Events WHERE EventID = %d", event_id);
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+        return 0;
+    }
+
+    MYSQL_RES *res = mysql_store_result(conn);
+    if (!res) {
+        fprintf(stderr, "mysql_store_result() failed: %s\n", mysql_error(conn));
+        return 0;
+    }
+
+    MYSQL_ROW row = mysql_fetch_row(res);
+    int count = atoi(row[0]);
+    mysql_free_result(res);
+    return count > 0;
+}
+//function to update event
+void updateEvent(MYSQL *conn) {
+    char *query = malloc(512 * sizeof(char));
+    int event_id;
+    char *new_title = malloc(100 * sizeof(char));
+    char *new_date = malloc(11 * sizeof(char));  // format: YYYY-MM-DD
+    char *new_time = malloc(9 * sizeof(char));   // format: HH:MM:SS
+    char *new_location = malloc(100 * sizeof(char));
+    int choice;
+
+    do {
+        printf("\nWhat would you like to do?\n");
+        printf("1. Update Title\n");
+        printf("2. Update Date\n");
+        printf("3. Update Time\n");
+        printf("4. Update Location\n");
+        printf("5. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 5) {
+            printf("Exiting...\n");
+            break;
+        }
+
+        printf("Enter the Event ID to update: ");
+        scanf("%d", &event_id);
+
+        if (!checkEventExists(conn, event_id)) {
+            printf("Event ID %d does not exist.\n", event_id);
+            continue;
+        }
+
+        printf("Are you sure you want to update Event ID %d? (1 for Yes, 0 for No): ", event_id);
+        int confirm;
+        scanf("%d", &confirm);
+        if (!confirm) {
+            printf("Update cancelled.\n");
+            continue;
+        }
+
+        switch (choice) {
+            case 1:
+                printf("Enter new Title: ");
+                getchar(); // To consume newline left by scanf
+                fgets(new_title, 100, stdin);
+                new_title[strcspn(new_title, "\n")] = 0;
+
+                snprintf(query, 512, "UPDATE Events SET Title = '%s' WHERE EventID = %d", new_title, event_id);
+                break;
+
+            case 2:
+                printf("Enter new Date (YYYY-MM-DD): ");
+                scanf("%10s", new_date);
+
+                snprintf(query, 512, "UPDATE Events SET Date = '%s' WHERE EventID = %d", new_date, event_id);
+                break;
+
+            case 3:
+                printf("Enter new Time (HH:MM:SS): ");
+                scanf("%8s", new_time);
+
+                snprintf(query, 512, "UPDATE Events SET Time = '%s' WHERE EventID = %d", new_time, event_id);
+                break;
+
+            case 4:
+                printf("Enter new Location: ");
+                getchar(); // To consume newline
+                fgets(new_location, 100, stdin);
+                new_location[strcspn(new_location, "\n")] = 0;
+
+                snprintf(query, 512, "UPDATE Events SET Location = '%s' WHERE EventID = %d", new_location, event_id);
+                break;
+
+            default:
+                printf("Invalid choice! Please enter a number between 1 and 5.\n");
+                continue;
+        }
+
+        if (mysql_query(conn, query)) {
+            fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+        } else {
+            printf("Event updated successfully!\n");
+        }
+
+    } while (1);
+
+    free(new_title);
+    free(new_date);
+    free(new_time);
+    free(new_location);
+    free(query);
+}
+//function to check attendanceid exits 
+int checkAttendanceExists(MYSQL *conn, int attendance_id) {
+    char query[256];
+    snprintf(query, sizeof(query), "SELECT COUNT(*) FROM Attendance WHERE AttendanceID = %d", attendance_id);
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+        return 0;
+    }
+
+    MYSQL_RES *res = mysql_store_result(conn);
+    if (!res) {
+        fprintf(stderr, "mysql_store_result() failed: %s\n", mysql_error(conn));
+        return 0;
+    }
+
+    MYSQL_ROW row = mysql_fetch_row(res);
+    int count = atoi(row[0]);
+    mysql_free_result(res);
+    return count > 0;
+}
+//function to update attendance
+void updateAttendance(MYSQL *conn) {
+    char *query = malloc(512 * sizeof(char));
+    int attendance_id;
+    int new_user_id;
+    int new_event_id;
+    int choice;
+
+    do {
+        printf("Enter the Attendance ID to update: ");
+        scanf("%d", &attendance_id);
+        printf("\nWhat would you like to do?\n");
+        printf("1. Update UserID\n");
+        printf("2. Update EventID\n");
+        printf("3. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        if (choice == 3) {
+            printf("Exiting...\n");
+            break;
+        }
+
+        if (!checkAttendanceExists(conn, attendance_id)) {
+            printf("Attendance ID %d does not exist.\n", attendance_id);
+            continue;
+        }
+
+        printf("Are you sure you want to update Attendance ID %d? (1 for Yes, 0 for No): ", attendance_id);
+        int confirm;
+        scanf("%d", &confirm);
+        if (!confirm) {
+            printf("Update cancelled.\n");
+            continue;
+        }
+
+        switch (choice) {
+            case 1:
+                printf("Enter new UserID: ");
+                scanf("%d", &new_user_id);
+                snprintf(query, 512, "UPDATE Attendance SET UserID = %d WHERE AttendanceID = %d", new_user_id, attendance_id);
+                break;
+
+            case 2:
+                printf("Enter new EventID: ");
+                scanf("%d", &new_event_id);
+                snprintf(query, 512, "UPDATE Attendance SET EventID = %d WHERE AttendanceID = %d", new_event_id, attendance_id);
+                break;
+
+            default:
+                printf("Invalid choice! Please enter a number between 1 and 3.\n");
+                continue;
+        }
+
+        if (mysql_query(conn, query)) {
+            fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+        } else {
+            printf("Attendance updated successfully!\n");
+        }
+
+    } while (1);
+
+    free(query);
+}
+//function to check if registration id exists
+int checkRegistrationExists(MYSQL *conn, int registration_id) {
+    char query[256];
+    snprintf(query, sizeof(query), "SELECT COUNT(*) FROM Registrations WHERE RegistrationID = %d", registration_id);
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+        return 0;
+    }
+
+    MYSQL_RES *res = mysql_store_result(conn);
+    if (!res) {
+        fprintf(stderr, "mysql_store_result() failed: %s\n", mysql_error(conn));
+        return 0;
+    }
+
+    MYSQL_ROW row = mysql_fetch_row(res);
+    int count = atoi(row[0]);
+    mysql_free_result(res);
+    return count > 0;
+}
+//function to update Registration table
+void updateRegistration(MYSQL *conn) {
+    char *query = malloc(256 * sizeof(char));
+    int registration_id;
+    int new_user_id;
+    int new_event_id;
+    int choice;
+
+    printf("Enter the Registration ID to update: ");
+    scanf("%d", &registration_id);
+
+    if (!checkRegistrationExists(conn, registration_id)) {
+        printf("Registration ID %d does not exist.\n", registration_id);
+        free(query);
+        return;
+    }
+
+    printf("Are you sure you want to update Registration ID %d? (1 for Yes, 0 for No): ", registration_id);
+    int confirm;
+    scanf("%d", &confirm);
+    if (!confirm) {
+        printf("Update cancelled.\n");
+        free(query);
+        return;
+    }
+
+    printf("What would you like to update?\n");
+    printf("1. Update UserID\n");
+    printf("2. Update EventID\n");
+    printf("Enter your choice: ");
+    scanf("%d", &choice);
+
+    switch (choice) {
+        case 1:
+            printf("Enter new UserID: ");
+            scanf("%d", &new_user_id);
+            snprintf(query, 256, "UPDATE Registrations SET UserID = %d WHERE RegistrationID = %d", new_user_id, registration_id);
+            break;
+
+        case 2:
+            printf("Enter new EventID: ");
+            scanf("%d", &new_event_id);
+            snprintf(query, 256, "UPDATE Registrations SET EventID = %d WHERE RegistrationID = %d", new_event_id, registration_id);
+            break;
+
+        default:
+            printf("Invalid choice!\n");
+            free(query);
+            return;
+    }
+
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+    } else {
+        printf("Registration updated successfully!\n");
+    }
+
+    free(query);
+}
+
+
 
 int main() {
     MYSQL *conn = connectDatabase();
