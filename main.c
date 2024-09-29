@@ -999,7 +999,7 @@ int userExists(int user_id) {
 
 // Function to update user details
 void updateUser() {
-    char query[512];
+    char *query = malloc(512 * sizeof(char));
     int user_id;
     char *new_name = (char *)malloc(100 * sizeof(char)); // Dynamic allocation for Name
     char *new_email = (char *)malloc(100 * sizeof(char)); // Dynamic allocation for Email
@@ -1088,6 +1088,7 @@ void updateUser() {
             } else {
                 printf("User updated successfully!\n");
             }
+            free(query);
         }
 
     } while (1); // Continue the loop until the user chooses to exit
