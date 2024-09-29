@@ -976,7 +976,129 @@ void findAttendance(MYSQL *conn) {
     free(query);
 }
 
-// function to update the user
+// Function to check if a user exists by User ID
+int userExists(int user_id) {
+    char query[256];
+    snprintf(query, sizeof(query), "SELECT COUNT(*) FROM Users WHERE UserID = %d", user_id);
+
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+        return 0; // Assuming user does not exist if the query fails
+    }
+
+    res = mysql_store_result(conn);
+    if (res) {
+        row = mysql_fetch_row(res);
+        int count = atoi(row[0]);
+        mysql_free_result(res);
+        return count > 0; // Return true if user exists
+    }
+
+    return 0; // User does not exist
+}
+
+// Function to update user details
+void updateUser() {
+    char *query = malloc(512 * sizeof(char));
+    int user_id;
+    char *new_name = (char *)malloc(100 * sizeof(char)); // Dynamic allocation for Name
+    char *new_email = (char *)malloc(100 * sizeof(char)); // Dynamic allocation for Email
+    char *new_role = (char *)malloc(20 * sizeof(char)); // Dynamic allocation for Role
+    int choice;
+
+    // Ask the user for User ID
+    printf("Enter the User ID to update: ");
+    scanf("%d", &user_id);
+
+    // Check if the user exists
+    if (!userExists(user_id)) {
+        printf("User with ID %d does not exist.\n", user_id);
+        free(new_name);
+        free(new_email);
+        free(new_role);
+        return;
+    }
+
+    do {
+        // Display menu options
+        printf("\nWhat would you like to update?\n");
+        printf("1. Update Name\n");
+        printf("2. Update Email\n");
+        printf("3. Update Role\n");
+        printf("4. Exit\n");
+        printf("Enter your choice: ");
+        scanf("%d", &choice);
+
+        // Exit condition
+        if (choice == 4) {
+            printf("Exiting...\n");
+            break;
+        }
+
+        // Update based on user's choice
+        switch (choice) {
+            case 1:
+                // Update Name
+                printf("Enter new Name: ");
+                getchar(); // To consume newline left by scanf
+                fgets(new_name, 100, stdin);
+                new_name[strcspn(new_name, "\n")] = 0;  // Remove newline
+
+                // Prepare SQL query to update Name
+                snprintf(query, sizeof(query),
+                         "UPDATE Users SET Name = '%s' WHERE UserID = %d",
+                         new_name, user_id);
+                break;
+
+            case 2:
+                // Update Email
+                printf("Enter new Email: ");
+                getchar(); // To consume newline
+                fgets(new_email, 100, stdin);
+                new_email[strcspn(new_email, "\n")] = 0;  // Remove newline
+
+                // Prepare SQL query to update Email
+                snprintf(query, sizeof(query),
+                         "UPDATE Users SET Email = '%s' WHERE UserID = %d",
+                         new_email, user_id);
+                break;
+
+            case 3:
+                // Update Role
+                printf("Enter new Role (Organizer/Participant): ");
+                getchar(); // To consume newline
+                fgets(new_role, 20, stdin);
+                new_role[strcspn(new_role, "\n")] = 0;  // Remove newline
+
+                // Prepare SQL query to update Role
+                snprintf(query, sizeof(query),
+                         "UPDATE Users SET Role = '%s' WHERE UserID = %d",
+                         new_role, user_id);
+                break;
+
+            default:
+                printf("Invalid choice! Please enter a number between 1 and 4.\n");
+                continue;
+        }
+
+        // Execute the SQL query if a valid update choice was made
+        if (choice >= 1 && choice <= 3) {
+            if (mysql_query(conn, query)) {
+                fprintf(stderr, "Query failed: %s\n", mysql_error(conn));
+            } else {
+                printf("User updated successfully!\n");
+            }
+            free(query);
+        }
+
+    } while (1); // Continue the loop until the user chooses to exit
+
+    // Free allocated memory
+    free(new_name);
+    free(new_email);
+    free(new_role);
+}
+
 //function to check if the event exists
 int checkEventExists(MYSQL *conn, int event_id) {
     char query[256];
