@@ -1,4 +1,4 @@
-
+// login.c
 
 #include "login.h"
 #include <stdio.h>
@@ -6,31 +6,6 @@
 #include <mysql.h>
 #include <mysqld_error.h>
 
-// Constants for MySQL connection
-const char* HOST = "localhost";
-const char* USER = "root";
-const char* PW = "Shyamsql@123";
-const char* DB = "projectd";
-
-// Setter function for userId
-void setId(Login* login, const char* id) {
-    strcpy(login->userId, id);
-}
-
-// Setter function for userPW
-void setPW(Login* login, const char* pw) {
-    strcpy(login->userPW, pw);
-}
-
-// Getter function for userId
-const char* getId(const Login* login) {
-    return login->userId;
-}
-
-// Getter function for userPW
-const char* getPW(const Login* login) {
-    return login->userPW;
-}
 
 // Function to encrypt a single character with a shift
 char encryptChar(char ch, int shift) {
@@ -48,7 +23,7 @@ char encryptChar(char ch, int shift) {
 void encrypt(const char* password, int shift, char* encrypted) {
     int len = strlen(password);
     int i;
-    for (i = 0; i < len; i++) {
+    for ( i = 0; i < len; i++) {
         encrypted[i] = encryptChar(password[i], shift);
     }
     encrypted[len] = '\0';
@@ -70,7 +45,7 @@ char decryptChar(char ch, int shift) {
 void decrypt(const char* encrypted, int shift, char* decrypted) {
     int len = strlen(encrypted);
     int i;
-    for (i = 0; i < len; i++) {
+    for ( i = 0; i < len; i++) {
         decrypted[i] = decryptChar(encrypted[i], shift);
     }
     decrypted[len] = '\0';
