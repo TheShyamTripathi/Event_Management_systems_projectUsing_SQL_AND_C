@@ -14,7 +14,7 @@ MYSQL* connectDatabase() {
         return NULL;
     }
     
-    // Replace "localhost", "user", "password", "traffic_db" with your own credentials
+    // Replace with your own MySQL credentials
     if (mysql_real_connect(conn, "localhost", "root", "Shyamsql@123", "projectd", 0, NULL, 0) == NULL) {
         printf("Connection failed: %s\n", mysql_error(conn));
         mysql_close(conn);
@@ -35,8 +35,9 @@ int main() {
 
     int shift = 7;
     int exitFlag = 0;
+    bool userAuthenticated = false;  // Flag to track if user is successfully signed in
 
-    while (!exitFlag) {
+    while (!exitFlag && !userAuthenticated) {
         system("cls");
         printf("1. Signup.\n");
         printf("2. SignIn.\n");
@@ -83,7 +84,8 @@ int main() {
 
                 // Check if the entered password matches the decrypted password
                 if (strcmp(decryptedPW, pw) == 0) {
-                    printf("Welcome!\n");
+                    printf("Login Successful! Welcome!\n");
+                    userAuthenticated = true;  // User successfully signed in
                 } else {
                     printf("Incorrect Password. Try Again!\n");
                 }
@@ -99,6 +101,18 @@ int main() {
         } else {
             printf("Invalid Input\n");
         }
+    }
+
+    // If user is authenticated, start further process
+    if (userAuthenticated) {
+        printf("\nStarting further process...\n");
+        
+        // ********** ADD YOUR CODE FOR FURTHER IMPLEMENTATION HERE **********
+        // This section will execute only if the user is successfully signed in.
+
+        // Example further implementation:
+        // printf("Loading user dashboard...\n");
+        // performUserSpecificTasks();  // Call further functions for authenticated users
     }
 
     // Close the database connection
