@@ -1579,6 +1579,3 @@ void printSeparator(int numColumns) {
     }
     printf("+\n");
 }
-
-
-
