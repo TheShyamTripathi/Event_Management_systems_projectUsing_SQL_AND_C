@@ -5,6 +5,7 @@
 #include <stdbool.h>
 #include <windows.h>
 #include "login.h"
+#include "functions1.h"
 
 // Function to connect to the database
 MYSQL* connectDatabase() {
@@ -106,13 +107,8 @@ int main() {
     // If user is authenticated, start further process
     if (userAuthenticated) {
         printf("\nStarting further process...\n");
-        
-        // ********** ADD YOUR CODE FOR FURTHER IMPLEMENTATION HERE **********
-        // This section will execute only if the user is successfully signed in.
-
-        // Example further implementation:
-        // printf("Loading user dashboard...\n");
-        // performUserSpecificTasks();  // Call further functions for authenticated users
+		joinShow(conn);
+	
     }
 
     // Close the database connection

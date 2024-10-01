@@ -62,5 +62,8 @@ int checkRegistrationExists(MYSQL *conn, int registration_id);
 // Function to update Registration table
 void updateRegistration(MYSQL *conn);
 
+// Function to join the table 
+void joinShow(MYSQL *conn);
+
 #endif  // Header guard end
 

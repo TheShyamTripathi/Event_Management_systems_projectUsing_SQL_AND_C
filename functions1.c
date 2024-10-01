@@ -1458,5 +1458,54 @@ void updateRegistration(MYSQL *conn) {
 
 
 
+void joinShow(MYSQL *conn) {
+    // Allocate memory for the query
+    char *query;
+    query = (char *)malloc(512 * sizeof(char));
+
+    // Define the SQL query
+    snprintf(query, 512,
+        "SELECT u.UserID, u.Name, u.Email, u.Role, "
+        "e.EventID, e.Title, e.Date, e.Time, e.Location, "
+        "r.RegistrationID, "
+        "a.AttendanceID "
+        "FROM Users u "
+        "JOIN Registrations r ON u.UserID = r.UserID "
+        "JOIN Events e ON r.EventID = e.EventID "
+        "JOIN Attendance a ON u.UserID = a.UserID AND e.EventID = a.EventID "
+        "ORDER BY e.Date ASC LIMIT 5;");
+
+    // Execute the query
+    if (mysql_query(conn, query)) {
+        fprintf(stderr, "%s\n", mysql_error(conn));
+        free(query);
+        return;
+    }
+
+    // Store the result
+    MYSQL_RES *result = mysql_store_result(conn);
+    if (result == NULL) {
+        fprintf(stderr, "Failed to retrieve result: %s\n", mysql_error(conn));
+        free(query);
+        return;
+    }
+
+    // Display the joined data in table format
+    printf("+--------+----------------------+--------------------------------+------------------+---------+-------------------+------------+--------+------------+-----------------+------------+--------------+\n");
+    printf("| UserID | Name                 | Email                          | Role             | EventID | Title             | Date       | Time   | Location   | RegistrationID   | Attendance | AttendanceID |\n");
+    printf("+--------+----------------------+--------------------------------+------------------+---------+-------------------+------------+--------+------------+-----------------+------------+--------------+\n");
+
+    MYSQL_ROW row;
+    while ((row = mysql_fetch_row(result)) != NULL) {
+        printf("| %-6s | %-20s | %-30s | %-16s | %-7s | %-17s | %-10s | %-6s | %-10s | %-15s | %-10s | %-12s |\n", 
+            row[0], row[1], row[2], row[3], row[4], row[5], row[6], row[7], row[8], row[9], row[10], row[11]);
+    }
+
+    printf("+--------+----------------------+--------------------------------+------------------+---------+-------------------+------------+--------+------------+-----------------+------------+--------------+\n");
+
+    // Free the result and query
+    mysql_free_result(result);
+    free(query);
+}
 
 
