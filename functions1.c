@@ -1,6 +1,9 @@
 #include <stdio.h>
 #include "functions1.h"  // Include the header file for function declarations
+#include <string.h>
 #include <mysql.h>
+#include <mysqld_error.h>
+
 // function to insert the Users
 void addUsers(MYSQL *conn) {
     char *query;

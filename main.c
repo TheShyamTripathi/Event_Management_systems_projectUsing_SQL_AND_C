@@ -4,7 +4,6 @@
 #include <mysql.h>
 #include <stdbool.h>
 #include <windows.h>
-#include "login.h"
 #include "functions1.h"
 
 // Function to connect to the database
@@ -16,7 +15,7 @@ MYSQL* connectDatabase() {
     }
     
     // Replace with your own MySQL credentials
-    if (mysql_real_connect(conn, "localhost", "root", "Shyamsql@123", "projectd", 0, NULL, 0) == NULL) {
+    if (mysql_real_connect(conn, "localhost", "root", "richa@2006", "projectd", 0, NULL, 0) == NULL) {
         printf("Connection failed: %s\n", mysql_error(conn));
         mysql_close(conn);
         return NULL;
