@@ -133,13 +133,17 @@ int main() {
 								printf("0. Exit");
 								scanf("%d", &var2);
 								switch(var1){
-									case 1: 
+									case 1:
+										addUsers(conn);
 										break;
 									case 2: 
+										removeUser(conn);
 										break;
-									case 3: 
+									case 3:
+									 	searchUser(conn);
 										break;
-									case 4: 
+									case 4:
+											updateUser(conn);
 										break;
 									case 0: 
 											b=0;
@@ -163,13 +167,14 @@ int main() {
 								printf("0. Exit");
 								scanf("%d", &var2);
 								switch(var1){
-									case 1: 
+									case 1: createEvent(conn);
 										break;
-									case 2: 
+									case 2:
+											deleteEvent(conn); 
 										break;
-									case 3: 
+									case 3: findEvent(conn);
 										break;
-									case 4: 
+									case 4:updateEvent(conn); 
 										break;
 									case 0:
 											b=0; 
@@ -193,13 +198,14 @@ int main() {
 								printf("0. Exit");
 								scanf("%d", &var2);
 								switch(var1){
-									case 1: 
+									case 1: registerForEvent(conn);
 										break;
 									case 2: 
+											deleteRegistrations(conn);
 										break;
-									case 3: 
+									case 3: findRegisterEvent(conn);
 										break;
-									case 4: 
+									case 4:	updateRegistration(conn); 
 										break;
 									case 0:
 										b=0; 
@@ -223,13 +229,16 @@ int main() {
 								printf("0. Exit");
 								scanf("%d", &var2);
 								switch(var1){
-									case 1: 
+									case 1: markAttendance(conn);
 										break;
-									case 2: 
+									case 2:
+											deleteAttendance(conn); 
 										break;
 									case 3: 
+											deleteRegistrations(conn);
 										break;
-									case 4: 
+									case 4:	
+											updateAttendance(conn); 
 										break;
 									case 0:
 										b=0; 
