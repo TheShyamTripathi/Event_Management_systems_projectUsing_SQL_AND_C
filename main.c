@@ -15,7 +15,7 @@ MYSQL* connectDatabase() {
     }
     
     // Replace with your own MySQL credentials
-    if (mysql_real_connect(conn, "localhost", "root", "richa@2006", "projectd", 0, NULL, 0) == NULL) {
+    if (mysql_real_connect(conn, "localhost", "root", "Shyamsql@123", "projectd", 0, NULL, 0) == NULL) {
         printf("Connection failed: %s\n", mysql_error(conn));
         mysql_close(conn);
         return NULL;
@@ -105,9 +105,168 @@ int main() {
 
     // If user is authenticated, start further process
     if (userAuthenticated) {
+    	system("cls");
         printf("\nStarting further process...\n");
+        
 		joinShow(conn);
+
+		int var1, var2, var3, a=1, b=0;
+		while(a){
+		printf("Select any number for performing Operation on following.\n");
+		printf("1. User\n");
+		printf("2. Event\n");
+		printf("3. Registration\n");
+		printf("4. Attendance\n");
+		printf("0. Exit");
+		scanf("%d", &var1);
+		
+		switch(var1){
+			case 1: 		
+							b=1;
+							while(b){
+							system("cls");
+							printf("Select any number for performing Operation on following.\n");
+								printf("1. ADD\n");
+								printf("2. DELETE\n");
+								printf("3. SEARCH\n");
+								printf("4. UPDATE\n");
+								printf("0. Exit");
+								scanf("%d", &var2);
+								switch(var1){
+									case 1:
+										addUsers(conn);
+										break;
+									case 2: 
+										removeUser(conn);
+										break;
+									case 3:
+									 	searchUser(conn);
+										break;
+									case 4:
+											updateUser(conn);
+										break;
+									case 0: 
+											b=0;
+										break;
+									default:
+										printf("Invalid Operation try again");
+										
+								}
+							}	
+							
+								break;
+			case 2: 	
+							b=1;
+							while(b){
+							system("cls");
+							printf("Select any number for performing Operation on following.\n");
+								printf("1. ADD\n");
+								printf("2. DELETE\n");
+								printf("3. SEARCH\n");
+								printf("4. UPDATE\n");
+								printf("0. Exit");
+								scanf("%d", &var2);
+								switch(var1){
+									case 1: createEvent(conn);
+										break;
+									case 2:
+											deleteEvent(conn); 
+										break;
+									case 3: findEvent(conn);
+										break;
+									case 4:updateEvent(conn); 
+										break;
+									case 0:
+											b=0; 
+										break;
+									default:
+										printf("Invalid Operation try again");
+										
+								}
+							}	
+							
+								break;
+			case 3: 	
+							b=1;
+							while(b){
+							system("cls");
+							printf("Select any number for performing Operation on following.\n");
+								printf("1. ADD\n");
+								printf("2. DELETE\n");
+								printf("3. SEARCH\n");
+								printf("4. UPDATE\n");
+								printf("0. Exit");
+								scanf("%d", &var2);
+								switch(var1){
+									case 1: registerForEvent(conn);
+										break;
+									case 2: 
+											deleteRegistrations(conn);
+										break;
+									case 3: findRegisterEvent(conn);
+										break;
+									case 4:	updateRegistration(conn); 
+										break;
+									case 0:
+										b=0; 
+										break;
+									default:
+										printf("Invalid Operation try again");
+										
+								}
+							}	
+							
+								break;
+			case 4: 		
+							b=1;
+							while(b){
+							system("cls");
+							printf("Select any number for performing Operation on following.\n");
+								printf("1. ADD\n");
+								printf("2. DELETE\n");
+								printf("3. SEARCH\n");
+								printf("4. UPDATE\n");
+								printf("0. Exit");
+								scanf("%d", &var2);
+								switch(var1){
+									case 1: markAttendance(conn);
+										break;
+									case 2:
+											deleteAttendance(conn); 
+										break;
+									case 3: 
+											deleteRegistrations(conn);
+										break;
+									case 4:	
+											updateAttendance(conn); 
+										break;
+									case 0:
+										b=0; 
+										break;
+									default:
+										printf("Invalid Operation try again");
+										break;
+										
+								}
+							}	
+							
+								break;
+			case 0: 
+					a=0;
+					break;
+			
+			default: 
+					printf("Invalid Operation Try again!!");
+					break;
+								
+								
+		}
+		}
+
+
 	
+	
+		
     }
 
     // Close the database connection
