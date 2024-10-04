@@ -1573,4 +1573,9 @@ void getDBPassword(MYSQL* conn, const char* id, char* encryptedPW) {
         }
     }
 }
-
+void printSeparator(int numColumns) {
+    for (int i = 0; i < numColumns; i++) {
+        printf("+-----------------");
+    }
+    printf("+\n");
+}
