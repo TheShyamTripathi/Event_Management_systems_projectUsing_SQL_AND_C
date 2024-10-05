@@ -4,6 +4,8 @@
 #include <mysql.h>
 #include <ctype.h>
 
+// 
+void clear_stdin();
 void encrypt(const char* password, int shift, char* encrypted);
 void decrypt(const char* encrypted, int shift, char* decrypted);
 void getDBPassword(MYSQL* conn, const char* id, char* encryptedPW);

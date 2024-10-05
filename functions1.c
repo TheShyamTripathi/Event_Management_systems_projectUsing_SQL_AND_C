@@ -5,6 +5,11 @@
 #include <mysqld_error.h>
 
 // function to insert the Users
+void clear_stdin() {
+    int c;
+    while ((c = getchar()) != '\n' && c != EOF);  // Clear input buffer
+}
+
 void addUsers(MYSQL *conn) {
     char *query;
     char *email = malloc(101 * sizeof(char));
@@ -17,15 +22,16 @@ void addUsers(MYSQL *conn) {
     }
 
     // Take input from user
-    printf("Enter Name: ");
+    printf("\nEnter Name: ");  
+    clear_stdin(); // Clear input buffer to avoid skipping input
     fgets(name, 101, stdin);
     name[strcspn(name, "\n")] = 0; // Remove newline character
 
-    printf("Enter Email: ");
+    printf("Enter Email: ");  
     fgets(email, 101, stdin);
     email[strcspn(email, "\n")] = 0; // Remove newline character
 
-    printf("Enter Role (Organizer/Participant): ");
+    printf("Enter Role (Organizer/Participant): ");  
     fgets(role, 21, stdin);
     role[strcspn(role, "\n")] = 0; // Remove newline character
 
@@ -55,7 +61,6 @@ void addUsers(MYSQL *conn) {
     free(name);
     free(role);
 }
-
 //Events
 
 //EventID (Primary Key)
@@ -79,6 +84,7 @@ void createEvent(MYSQL *conn) {
 
     // Take input from user
     printf("Enter Title: ");
+    clear_stdin();
     fgets(Title, 200, stdin);
     Title[strcspn(Title, "\n")] = 0; // Remove newline character
 

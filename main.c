@@ -117,7 +117,7 @@ int main() {
 		printf("2. Event\n");
 		printf("3. Registration\n");
 		printf("4. Attendance\n");
-		printf("0. Exit");
+		printf("0. Exit\n");
 		scanf("%d", &var1);
 		
 		switch(var1){
@@ -130,7 +130,7 @@ int main() {
 								printf("2. DELETE\n");
 								printf("3. SEARCH\n");
 								printf("4. UPDATE\n");
-								printf("0. Exit");
+								printf("0. Exit\n");
 								scanf("%d", &var2);
 								switch(var1){
 									case 1:
@@ -152,6 +152,7 @@ int main() {
 										printf("Invalid Operation try again");
 										
 								}
+								Sleep(3000);
 							}	
 							
 								break;
@@ -164,7 +165,7 @@ int main() {
 								printf("2. DELETE\n");
 								printf("3. SEARCH\n");
 								printf("4. UPDATE\n");
-								printf("0. Exit");
+								printf("0. Exit\n");
 								scanf("%d", &var2);
 								switch(var1){
 									case 1: createEvent(conn);
@@ -195,7 +196,7 @@ int main() {
 								printf("2. DELETE\n");
 								printf("3. SEARCH\n");
 								printf("4. UPDATE\n");
-								printf("0. Exit");
+								printf("0. Exit\n");
 								scanf("%d", &var2);
 								switch(var1){
 									case 1: registerForEvent(conn);
@@ -226,7 +227,7 @@ int main() {
 								printf("2. DELETE\n");
 								printf("3. SEARCH\n");
 								printf("4. UPDATE\n");
-								printf("0. Exit");
+								printf("0. Exit\n");
 								scanf("%d", &var2);
 								switch(var1){
 									case 1: markAttendance(conn);
