@@ -92,7 +92,7 @@ int main() {
             } else {
                 printf("User ID not found. Try Again!\n");
             }
-            Sleep(5000);
+            Sleep(2000);
 
         } else if (val == 0) {
             exitFlag = 1;
@@ -184,6 +184,7 @@ int main() {
 										printf("Invalid Operation try again");
 										
 								}
+								Sleep(3000);
 							}	
 							
 								break;
@@ -215,6 +216,7 @@ int main() {
 										printf("Invalid Operation try again");
 										
 								}
+								Sleep(3000);
 							}	
 							
 								break;
@@ -249,6 +251,7 @@ int main() {
 										break;
 										
 								}
+								Sleep(3000);
 							}	
 							
 								break;
