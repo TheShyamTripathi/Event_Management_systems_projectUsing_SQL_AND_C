@@ -29,7 +29,7 @@ CREATE TABLE `events` (
   `Time` time NOT NULL,
   `Location` varchar(200) NOT NULL,
   PRIMARY KEY (`EventID`)
-) ENGINE=InnoDB AUTO_INCREMENT=100 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=111 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,6 +38,7 @@ CREATE TABLE `events` (
 
 LOCK TABLES `events` WRITE;
 /*!40000 ALTER TABLE `events` DISABLE KEYS */;
+INSERT INTO `events` VALUES (101,'Tech Conference 2024','2024-11-10','09:00:00','New York Convention Center'),(102,'Startup Pitch Night','2024-11-15','18:00:00','Silicon Valley Hub'),(103,'AI & Machine Learning Expo','2024-12-05','10:30:00','Boston Tech Park'),(104,'Blockchain Summit','2024-12-12','14:00:00','San Francisco Conference Hall'),(105,'Cybersecurity Workshop','2024-12-20','09:30:00','Los Angeles Tech Hub'),(106,'Cloud Computing Bootcamp','2025-01-10','08:45:00','Chicago Innovation Center'),(107,'Data Science Symposium','2025-01-25','13:00:00','Austin Tech Plaza'),(108,'Web Development Hackathon','2025-02-10','12:00:00','Seattle Dev Arena'),(109,'Fintech Innovation Forum','2025-02-18','15:00:00','New York Finance Hub'),(110,'Entrepreneurship Summit','2025-03-01','10:00:00','Miami Business Center');
 /*!40000 ALTER TABLE `events` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -50,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-01 16:31:11
+-- Dump completed on 2024-10-06  5:43:57

@@ -31,7 +31,7 @@ CREATE TABLE `registrations` (
   KEY `EventID` (`EventID`),
   CONSTRAINT `registrations_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`),
   CONSTRAINT `registrations_ibfk_2` FOREIGN KEY (`EventID`) REFERENCES `events` (`EventID`)
-) ENGINE=InnoDB AUTO_INCREMENT=10000 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=10021 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `registrations` (
 
 LOCK TABLES `registrations` WRITE;
 /*!40000 ALTER TABLE `registrations` DISABLE KEYS */;
+INSERT INTO `registrations` VALUES (10010,1001,101),(10011,1002,102),(10012,1003,103),(10013,1004,104),(10014,1006,106),(10015,1007,107),(10016,1008,108),(10017,1009,109);
 /*!40000 ALTER TABLE `registrations` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-01 16:31:12
+-- Dump completed on 2024-10-06  5:43:57

@@ -31,7 +31,7 @@ CREATE TABLE `attendance` (
   KEY `EventID` (`EventID`),
   CONSTRAINT `attendance_ibfk_1` FOREIGN KEY (`UserID`) REFERENCES `users` (`UserID`),
   CONSTRAINT `attendance_ibfk_2` FOREIGN KEY (`EventID`) REFERENCES `events` (`EventID`)
-) ENGINE=InnoDB DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=9 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -40,6 +40,7 @@ CREATE TABLE `attendance` (
 
 LOCK TABLES `attendance` WRITE;
 /*!40000 ALTER TABLE `attendance` DISABLE KEYS */;
+INSERT INTO `attendance` VALUES (1,1001,101),(2,1002,102),(3,1003,103),(4,1004,104),(5,1006,106),(6,1007,107),(7,1008,108),(8,1009,109);
 /*!40000 ALTER TABLE `attendance` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -52,4 +53,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-01 16:31:11
+-- Dump completed on 2024-10-06  5:43:57

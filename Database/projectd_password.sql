@@ -35,7 +35,7 @@ CREATE TABLE `password` (
 
 LOCK TABLES `password` WRITE;
 /*!40000 ALTER TABLE `password` DISABLE KEYS */;
-INSERT INTO `password` VALUES ('Shyam','zofht890'),('shyam1','zofht8'),('shyam2','zofht9');
+INSERT INTO `password` VALUES ('Shyam','zofht890'),('shyam1','zofht8'),('shyam2','zofht9'),('shyam3','zofht00'),('Shyam4','zofht11');
 /*!40000 ALTER TABLE `password` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -48,4 +48,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-01 16:31:12
+-- Dump completed on 2024-10-06  5:43:57

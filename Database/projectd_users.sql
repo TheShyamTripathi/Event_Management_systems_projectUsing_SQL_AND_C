@@ -29,7 +29,7 @@ CREATE TABLE `users` (
   `Role` enum('Organizer','Participant') NOT NULL,
   PRIMARY KEY (`UserID`),
   UNIQUE KEY `Email` (`Email`)
-) ENGINE=InnoDB AUTO_INCREMENT=1003 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
+) ENGINE=InnoDB AUTO_INCREMENT=1017 DEFAULT CHARSET=utf8mb4 COLLATE=utf8mb4_0900_ai_ci;
 /*!40101 SET character_set_client = @saved_cs_client */;
 
 --
@@ -38,7 +38,7 @@ CREATE TABLE `users` (
 
 LOCK TABLES `users` WRITE;
 /*!40000 ALTER TABLE `users` DISABLE KEYS */;
-INSERT INTO `users` VALUES (1001,'Shyam Tripathi','shyam123@gmail.com','Organizer'),(1002,'Shyam Pandit','shyamtri123@gmail.com','Participant');
+INSERT INTO `users` VALUES (1001,'Shyam Tripathi','shyam123@gmail.com','Organizer'),(1002,'Shyam Pandit','shyamtri123@gmail.com','Participant'),(1003,'shyam2','shyam@gmail.com','Organizer'),(1004,'Shyam Tripathi','shyamtripathi373@gmail.com','Organizer'),(1006,'Richa ','richa12@gmail.com','Participant'),(1007,'Alice Johnson','alice.johnson@example.com','Organizer'),(1008,'Bob Smith','bob.smith@example.com','Participant'),(1009,'Charlie Davis','charlie.davis@example.com','Organizer'),(1010,'David Miller','david.miller@example.com','Participant'),(1011,'Eva Brown','eva.brown@example.com','Organizer'),(1012,'Frank Wilson','frank.wilson@example.com','Participant'),(1013,'Grace Lee','grace.lee@example.com','Organizer'),(1014,'Hannah White','hannah.white@example.com','Participant'),(1015,'Ian Moore','ian.moore@example.com','Organizer'),(1016,'Julia Adams','julia.adams@example.com','Participant');
 /*!40000 ALTER TABLE `users` ENABLE KEYS */;
 UNLOCK TABLES;
 /*!40103 SET TIME_ZONE=@OLD_TIME_ZONE */;
@@ -51,4 +51,4 @@ UNLOCK TABLES;
 /*!40101 SET COLLATION_CONNECTION=@OLD_COLLATION_CONNECTION */;
 /*!40111 SET SQL_NOTES=@OLD_SQL_NOTES */;
 
--- Dump completed on 2024-10-01 16:31:11
+-- Dump completed on 2024-10-06  5:43:57
