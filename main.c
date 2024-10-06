@@ -110,7 +110,8 @@ int main() {
         
 		joinShow(conn);
 
-		int var1, var2, var3, a=1, b=0;
+		int var1, var2, var3;
+		bool a=true, b;
 		while(a){
 		printf("Select any number for performing Operation on following.\n");
 		printf("1. User\n");
@@ -122,7 +123,7 @@ int main() {
 		
 		switch(var1){
 			case 1: 		
-							b=1;
+							b=true;
 							while(b){
 							system("cls");
 							printf("Select any number for performing Operation on following.\n");
@@ -132,7 +133,7 @@ int main() {
 								printf("4. UPDATE\n");
 								printf("0. Exit\n");
 								scanf("%d", &var2);
-								switch(var1){
+								switch(var2){
 									case 1:
 										addUsers(conn);
 										break;
@@ -146,7 +147,7 @@ int main() {
 											updateUser(conn);
 										break;
 									case 0: 
-											b=0;
+											b = false;
 										break;
 									default:
 										printf("Invalid Operation try again");
@@ -167,7 +168,7 @@ int main() {
 								printf("4. UPDATE\n");
 								printf("0. Exit\n");
 								scanf("%d", &var2);
-								switch(var1){
+								switch(var2){
 									case 1: createEvent(conn);
 										break;
 									case 2:
@@ -178,7 +179,7 @@ int main() {
 									case 4:updateEvent(conn); 
 										break;
 									case 0:
-											b=0; 
+											b=false; 
 										break;
 									default:
 										printf("Invalid Operation try again");
@@ -199,7 +200,7 @@ int main() {
 								printf("4. UPDATE\n");
 								printf("0. Exit\n");
 								scanf("%d", &var2);
-								switch(var1){
+								switch(var2){
 									case 1: registerForEvent(conn);
 										break;
 									case 2: 
@@ -210,7 +211,7 @@ int main() {
 									case 4:	updateRegistration(conn); 
 										break;
 									case 0:
-										b=0; 
+										b=false; 
 										break;
 									default:
 										printf("Invalid Operation try again");
@@ -231,7 +232,7 @@ int main() {
 								printf("4. UPDATE\n");
 								printf("0. Exit\n");
 								scanf("%d", &var2);
-								switch(var1){
+								switch(var2){
 									case 1: markAttendance(conn);
 										break;
 									case 2:
@@ -244,7 +245,7 @@ int main() {
 											updateAttendance(conn); 
 										break;
 									case 0:
-										b=0; 
+										b=false; 
 										break;
 									default:
 										printf("Invalid Operation try again");
@@ -256,7 +257,7 @@ int main() {
 							
 								break;
 			case 0: 
-					a=0;
+					a=false;
 					break;
 			
 			default: 
